@@ -68,6 +68,39 @@ h1 {
     filter: drop-shadow(0 0 10px gold);
 }
 
+/* PROMISE HEADER */
+.promise-header {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #7a2e2e;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* GOLD UNDERLINE */
+.promise-header::after {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 2px;
+    margin: 6px auto 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        gold,
+        transparent
+    );
+    animation: shimmer 3s linear infinite;
+}
+
+/* SHIMMER ANIMATION */
+@keyframes shimmer {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+}
+
 /* PROMISE AREA */
 .promise-area {
     height: 100%;
@@ -79,10 +112,11 @@ h1 {
     font-size: 16px;
 }
 
+/* PROMISE LINE */
 .promise-line {
     opacity: 0;
     animation: fadeUp 2s ease forwards;
-    margin: 5px 0;
+    margin: 4px 0;
 }
 
 @keyframes fadeUp {
@@ -111,7 +145,7 @@ h1 {
 <h1>Click to Unfold My Promises 💍</h1>
 
 <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/audio/2022/10/26/audio_2f0e92bcd9.mp3" type="audio/mpeg">
+    <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <div class="scroll-container" onclick="openScroll()">
@@ -126,7 +160,9 @@ h1 {
             <span class="mr">💘</span>
         </div>
 
-        <div class="promise-area" id="promiseArea"></div>
+        <div class="promise-area" id="promiseArea">
+            <div class="promise-header">I Promise… 💍</div>
+        </div>
     </div>
 </div>
 
@@ -139,41 +175,41 @@ h1 {
 let opened = false;
 
 const promises = [
-"I promise to stay even when it's hard.",
-"I promise to choose you every single day.",
-"I promise to listen before reacting.",
-"I promise to protect your heart.",
-"I promise to be your calm.",
+"To stay even when it's hard.",
+"To choose you every single day.",
+"To listen before reacting.",
+"To protect your heart.",
+"To be your calm.",
 
-"I promise to forgive with love.",
-"I promise to fight for us.",
-"I promise to communicate honestly.",
-"I promise to hold your hand in storms.",
-"I promise to celebrate your wins.",
+"To forgive with love.",
+"To fight for us.",
+"To communicate honestly.",
+"To hold your hand in storms.",
+"To celebrate your wins.",
 
-"I promise to be patient.",
-"I promise to value you.",
-"I promise to stay loyal.",
-"I promise to never take you for granted.",
-"I promise to grow with you.",
+"To be patient.",
+"To value you.",
+"To stay loyal.",
+"To never take you for granted.",
+"To grow with you.",
 
-"I promise to respect your feelings.",
-"I promise to support your dreams.",
-"I promise to stand beside you.",
-"I promise to understand you.",
-"I promise to comfort you.",
+"To respect your feelings.",
+"To support your dreams.",
+"To stand beside you.",
+"To understand you.",
+"To comfort you.",
 
-"I promise to protect our bond.",
-"I promise to choose us again.",
-"I promise to be honest always.",
-"I promise to stay committed.",
-"I promise to care deeply.",
+"To protect our bond.",
+"To choose us again.",
+"To be honest always.",
+"To stay committed.",
+"To care deeply.",
 
-"I promise to grow together.",
-"I promise to love you gently.",
-"I promise to be your home.",
-"I promise to stay emotionally present.",
-"I promise to love you forever."
+"To grow together.",
+"To love you gently.",
+"To be your home.",
+"To stay emotionally present.",
+"To love you forever."
 ];
 
 function openScroll() {
@@ -192,7 +228,7 @@ function showBatch(index) {
     const area = document.getElementById("promiseArea");
     const hearts = document.querySelectorAll("#hearts span");
 
-    area.innerHTML = "";
+    area.innerHTML = '<div class="promise-header">I Promise… 💍</div>';
 
     hearts.forEach(h => {
         h.classList.add("glow");
