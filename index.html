@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Day 💍</title>
+
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(to bottom, #f8e8ec, #f3d1d8);
+    font-family: Georgia, serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+h1 {
+    margin-top: 50px;
+    color: #7a2e2e;
+    font-size: 26px;
+}
+
+/* SCROLL CONTAINER */
+.scroll-container {
+    margin: 40px auto;
+    width: 320px;
+    height: 120px;
+    position: relative;
+    cursor: pointer;
+}
+
+/* HEART BORDER */
+.heart-border span {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.6;
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+/* Position hearts around scroll */
+.top-left { top: -15px; left: -15px; }
+.top-right { top: -15px; right: -15px; }
+.bottom-left { bottom: -15px; left: -15px; }
+.bottom-right { bottom: -15px; right: -15px; }
+.mid-left { top: 50%; left: -20px; transform: translateY(-50%); }
+.mid-right { top: 50%; right: -20px; transform: translateY(-50%); }
+
+/* Glow effect */
+.glow {
+    transform: scale(1.4);
+    filter: drop-shadow(0 0 8px gold);
+}
+
+/* SCROLL */
+.scroll {
+    width: 100%;
+    height: 120px;
+    background: #f5e6c8;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: height 1s ease, box-shadow 0.6s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.scroll.open {
+    height: 420px;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 40px rgba(255, 215, 0, 0.4),
+        0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* PROMISE AREA */
+.promise-area {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    padding: 0 20px;
+    color: #5a2b2b;
+    font-size: 16px;
+}
+
+/* PROMISE LINE */
+.promise-line {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: riseUp 3s ease forwards;
+    margin: 5px 0;
+}
+
+@keyframes riseUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* FINAL MESSAGE */
+.final-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #7a2e2e;
+    display: none;
+    animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Click to Unfold My Promises 💍</h1>
+
+<div class="scroll-container" onclick="openScroll()">
+
+    <!-- HEART BORDER -->
+    <div class="heart-border" id="heartBorder">
+        <span class="top-left">💖</span>
+        <span class="top-right">❤️</span>
+        <span class="bottom-left">💗</span>
+        <span class="bottom-right">💞</span>
+        <span class="mid-left">💓</span>
+        <span class="mid-right">💘</span>
+    </div>
+
+    <div class="scroll" id="scroll">
+        <div class="promise-area" id="promiseArea"></div>
+    </div>
+</div>
+
+<div class="final-message" id="finalMsg">
+    <div>Happy Promise Day 💍❤️</div>
+    <div>I promise we will be together forever 🫶✨</div>
+</div>
+
+<script>
+let opened = false;
+
+const promises = [
+"I promise to stay even when it's hard.",
+"I promise to choose you every single day.",
+"I promise to listen before reacting.",
+"I promise to protect your heart.",
+"I promise to be your calm.",
+"I promise to support your dreams.",
+"I promise to grow with you.",
+"I promise to respect you.",
+"I promise to stand beside you.",
+"I promise to trust you.",
+"I promise to forgive with love.",
+"I promise to fight for us.",
+"I promise to communicate honestly.",
+"I promise to hold your hand in storms.",
+"I promise to celebrate your wins.",
+"I promise to wipe your tears.",
+"I promise to be patient.",
+"I promise to value you.",
+"I promise to stay loyal.",
+"I promise to never take you for granted."
+];
+
+function openScroll() {
+    if (opened) return;
+    opened = true;
+
+    document.getElementById("scroll").classList.add("open");
+
+    setTimeout(() => {
+        showBatch(0);
+    }, 1000);
+}
+
+function showBatch(index) {
+    const area = document.getElementById("promiseArea");
+    const hearts = document.querySelectorAll("#heartBorder span");
+
+    area.innerHTML = "";
+
+    // Glow hearts
+    hearts.forEach(h => {
+        h.classList.add("glow");
+        setTimeout(() => h.classList.remove("glow"), 800);
+    });
+
+    for (let i = index; i < index + 5 && i < promises.length; i++) {
+        const line = document.createElement("div");
+        line.classList.add("promise-line");
+        line.textContent = promises[i];
+        area.appendChild(line);
+    }
+
+    if (index + 5 < promises.length) {
+        setTimeout(() => {
+            showBatch(index + 5);
+        }, 5000); // 5 second pause
+    } else {
+        setTimeout(closeScroll, 5000);
+    }
+}
+
+function closeScroll() {
+    document.getElementById("scroll").classList.remove("open");
+
+    setTimeout(() => {
+        document.getElementById("finalMsg").style.display = "block";
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
