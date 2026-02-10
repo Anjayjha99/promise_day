@@ -28,28 +28,6 @@ h1 {
     cursor: pointer;
 }
 
-/* HEART BORDER */
-.heart-border span {
-    position: absolute;
-    font-size: 20px;
-    opacity: 0.6;
-    transition: transform 0.5s ease, filter 0.5s ease;
-}
-
-/* Position hearts around scroll */
-.top-left { top: -15px; left: -15px; }
-.top-right { top: -15px; right: -15px; }
-.bottom-left { bottom: -15px; left: -15px; }
-.bottom-right { bottom: -15px; right: -15px; }
-.mid-left { top: 50%; left: -20px; transform: translateY(-50%); }
-.mid-right { top: 50%; right: -20px; transform: translateY(-50%); }
-
-/* Glow effect */
-.glow {
-    transform: scale(1.4);
-    filter: drop-shadow(0 0 8px gold);
-}
-
 /* SCROLL */
 .scroll {
     width: 100%;
@@ -65,42 +43,56 @@ h1 {
 .scroll.open {
     height: 420px;
     box-shadow:
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 40px rgba(255, 215, 0, 0.4),
+        0 0 25px rgba(255, 215, 0, 0.7),
+        0 0 45px rgba(255, 215, 0, 0.4),
         0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* HEART BORDER */
+.heart-border span {
+    position: absolute;
+    font-size: 18px;
+    opacity: 0.6;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.tl { top: 8px; left: 10px; }
+.tr { top: 8px; right: 10px; }
+.bl { bottom: 8px; left: 10px; }
+.br { bottom: 8px; right: 10px; }
+.ml { top: 50%; left: 8px; transform: translateY(-50%); }
+.mr { top: 50%; right: 8px; transform: translateY(-50%); }
+
+.glow {
+    transform: scale(1.4);
+    filter: drop-shadow(0 0 10px gold);
 }
 
 /* PROMISE AREA */
 .promise-area {
-    position: absolute;
-    bottom: 30px;
-    width: 100%;
-    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 25px;
     color: #5a2b2b;
     font-size: 16px;
 }
 
-/* PROMISE LINE */
 .promise-line {
     opacity: 0;
-    transform: translateY(40px);
-    animation: riseUp 3s ease forwards;
+    animation: fadeUp 2s ease forwards;
     margin: 5px 0;
 }
 
-@keyframes riseUp {
-    0% { opacity: 0; transform: translateY(40px); }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 1; transform: translateY(0); }
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* FINAL MESSAGE */
 .final-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 40px;
     font-size: 24px;
     color: #7a2e2e;
     display: none;
@@ -118,19 +110,22 @@ h1 {
 
 <h1>Click to Unfold My Promises 💍</h1>
 
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/10/26/audio_2f0e92bcd9.mp3" type="audio/mpeg">
+</audio>
+
 <div class="scroll-container" onclick="openScroll()">
-
-    <!-- HEART BORDER -->
-    <div class="heart-border" id="heartBorder">
-        <span class="top-left">💖</span>
-        <span class="top-right">❤️</span>
-        <span class="bottom-left">💗</span>
-        <span class="bottom-right">💞</span>
-        <span class="mid-left">💓</span>
-        <span class="mid-right">💘</span>
-    </div>
-
     <div class="scroll" id="scroll">
+
+        <div class="heart-border" id="hearts">
+            <span class="tl">💖</span>
+            <span class="tr">❤️</span>
+            <span class="bl">💗</span>
+            <span class="br">💞</span>
+            <span class="ml">💓</span>
+            <span class="mr">💘</span>
+        </div>
+
         <div class="promise-area" id="promiseArea"></div>
     </div>
 </div>
@@ -149,41 +144,56 @@ const promises = [
 "I promise to listen before reacting.",
 "I promise to protect your heart.",
 "I promise to be your calm.",
-"I promise to support your dreams.",
-"I promise to grow with you.",
-"I promise to respect you.",
-"I promise to stand beside you.",
-"I promise to trust you.",
+
 "I promise to forgive with love.",
 "I promise to fight for us.",
 "I promise to communicate honestly.",
 "I promise to hold your hand in storms.",
 "I promise to celebrate your wins.",
-"I promise to wipe your tears.",
+
 "I promise to be patient.",
 "I promise to value you.",
 "I promise to stay loyal.",
-"I promise to never take you for granted."
+"I promise to never take you for granted.",
+"I promise to grow with you.",
+
+"I promise to respect your feelings.",
+"I promise to support your dreams.",
+"I promise to stand beside you.",
+"I promise to understand you.",
+"I promise to comfort you.",
+
+"I promise to protect our bond.",
+"I promise to choose us again.",
+"I promise to be honest always.",
+"I promise to stay committed.",
+"I promise to care deeply.",
+
+"I promise to grow together.",
+"I promise to love you gently.",
+"I promise to be your home.",
+"I promise to stay emotionally present.",
+"I promise to love you forever."
 ];
 
 function openScroll() {
     if (opened) return;
     opened = true;
 
-    document.getElementById("scroll").classList.add("open");
+    const music = document.getElementById("bgMusic");
+    music.volume = 1;
+    music.play();
 
-    setTimeout(() => {
-        showBatch(0);
-    }, 1000);
+    document.getElementById("scroll").classList.add("open");
+    setTimeout(() => showBatch(0), 1200);
 }
 
 function showBatch(index) {
     const area = document.getElementById("promiseArea");
-    const hearts = document.querySelectorAll("#heartBorder span");
+    const hearts = document.querySelectorAll("#hearts span");
 
     area.innerHTML = "";
 
-    // Glow hearts
     hearts.forEach(h => {
         h.classList.add("glow");
         setTimeout(() => h.classList.remove("glow"), 800);
@@ -191,26 +201,40 @@ function showBatch(index) {
 
     for (let i = index; i < index + 5 && i < promises.length; i++) {
         const line = document.createElement("div");
-        line.classList.add("promise-line");
+        line.className = "promise-line";
         line.textContent = promises[i];
         area.appendChild(line);
     }
 
     if (index + 5 < promises.length) {
-        setTimeout(() => {
-            showBatch(index + 5);
-        }, 5000); // 5 second pause
+        setTimeout(() => showBatch(index + 5), 7000);
     } else {
-        setTimeout(closeScroll, 5000);
+        setTimeout(closeScroll, 7000);
     }
 }
 
+function fadeOutMusic() {
+    const music = document.getElementById("bgMusic");
+    let fade = setInterval(() => {
+        if (music.volume > 0.05) {
+            music.volume -= 0.05;
+        } else {
+            music.volume = 0;
+            music.pause();
+            clearInterval(fade);
+        }
+    }, 200);
+}
+
 function closeScroll() {
+    document.getElementById("promiseArea").innerHTML = "";
     document.getElementById("scroll").classList.remove("open");
+
+    fadeOutMusic();
 
     setTimeout(() => {
         document.getElementById("finalMsg").style.display = "block";
-    }, 1000);
+    }, 1200);
 }
 </script>
 
